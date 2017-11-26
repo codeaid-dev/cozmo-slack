@@ -21,19 +21,18 @@ def default_func(message):
     msg = message.body['text'] # メッセージを取り出す
     cozmo.run_program(cozmo_say)
 
+# sayコマンド：Cozomoが発話する言葉を指定
 @respond_to(r'^say (.*)')
 @listen_to(r'^say (.*)')
 def cozmo_say(message, args):
-    global msg
     msg = args
     cozmo.run_program(cozmo_say)
 
-# Cozmoに喋らせる
 def cozmo_say(robot: cozmo.robot.Robot):
     if (msg is not None) and (len(msg) > 0):
         robot.say_text(msg).wait_for_completed()
 
-# Cozmoの移動
+# driveコマンド：Cozmoの移動
 @respond_to(r'^drive (.*)')
 @listen_to(r'^drive (.*)')
 def cozmo_drive(message, args):
@@ -52,6 +51,7 @@ def do_drive(robot: cozmo.robot.Robot):
             drive_dir = "backwards"
         robot.drive_wheels(drive_speed, drive_speed, duration=drive_duration)
 
+# turnコマンド：Cozomoが左右に回転する
 @respond_to(r'^turn (.*)')
 @listen_to(r'^turn (.*)')
 def cozmo_turn(message, args):
@@ -65,6 +65,7 @@ def do_turn(robot: cozmo.robot.Robot):
     if drive_angle is not None:
         robot.turn_in_place(degrees(drive_angle)).wait_for_completed()
 
+# liftコマンド：Cozmoのリフトが上下する
 @respond_to(r'^lift (.*)')
 @listen_to(r'^lift (.*)')
 def cozmo_lift(message, args):
@@ -78,6 +79,7 @@ def do_lift(robot: cozmo.robot.Robot):
     if lift_height is not None:
         robot.set_lift_height(height=lift_height).wait_for_completed()
 
+# headコマンド：Cozmoの頭が上下する
 @respond_to(r'^head (.*)')
 @listen_to(r'^head (.*)')
 def cozmo_head(message, args):
