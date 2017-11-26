@@ -25,6 +25,7 @@ def default_func(message):
 @respond_to(r'^say (.*)')
 @listen_to(r'^say (.*)')
 def cozmo_say(message, args):
+    global msg
     msg = args
     cozmo.run_program(cozmo_say)
 
